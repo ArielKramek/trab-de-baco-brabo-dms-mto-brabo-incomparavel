@@ -1,0 +1,53 @@
+CREATE TABLE Cliente
+(
+ id INT PRIMARY KEY,  
+ Celular VARCHAR(13) NOT NULL,  
+ Nome VARCHAR(100) NOT NULL,  
+ EMAIL VARCHAR(200) NOT NULL,  
+ CPF CHAR(11) NOT NULL,  
+ UNIQUE (EMAIL,CPF)
+);
+
+CREATE TABLE Compra
+(
+ id INT PRIMARY KEY,  
+ idCliente INT NOT NULL,  
+ idEndereco INT NOT NULL,  
+ Valor_Total DECIMAL(10,2) NOT NULL,  
+ Forma_Pagamento VARCHAR(100) NOT NULL,  
+ Data DATE NOT NULL  
+);
+
+CREATE TABLE Endereco
+(
+ id INT PRIMARY KEY,  
+ idCliente INT NOT NULL,  
+ Rua VARCHAR(100) NOT NULL,  
+ Bairro VARCHAR(200) NOT NULL,  
+ Numero INT NOT NULL,  
+ Cidade VARCHAR(100) NOT NULL,  
+ Estado VARCHAR(50) NOT NULL  
+);
+
+CREATE TABLE Produto
+(
+ id INT PRIMARY KEY,  
+ Nome VARCHAR(150) NOT NULL,  
+ Descricao TEXT NOT NULL,  
+ Categoria VARCHAR(100) NOT NULL,  
+ Preco DECIMAL(10,2) NOT NULL,  
+ Quantidade VARCHAR(20) NOT NULL  
+);
+
+CREATE TABLE Possui
+(
+ id INT PRIMARY KEY,    
+ Valor_Unitario INT NOT NULL,  
+ Quantidade VARCHAR(10) NOT NULL  
+);
+
+ALTER TABLE Compra ADD FOREIGN KEY(idCliente) REFERENCES Cliente (id);
+ALTER TABLE Compra ADD FOREIGN KEY(idEndereco) REFERENCES Endereco (id);
+ALTER TABLE Endereco ADD FOREIGN KEY(idCliente) REFERENCES Cliente (id);
+ALTER TABLE Possui ADD FOREIGN KEY(id) REFERENCES Compra (id);
+ALTER TABLE Possui ADD FOREIGN KEY(id) REFERENCES Produto (id);
